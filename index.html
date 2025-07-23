@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es"> 
+  <head> 
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title style="animation: pulse 1.5s infinite">💎 A-MENA 💎</title> 
+    <style>@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v23/pxiEyp8kv8JHgFVrFJA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v23/pxiByp8kv8JHgFVrLEj6V1s.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v23/pxiByp8kv8JHgFVrLCz7V1s.ttf) format('truetype');
+}
+</style> 
+    <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #2e2e2e 0%, #1a1a1a 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --accent: #7c3aed;
+    }
+
+    body {
+      background: var(--primary-gradient);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0rem;
+    }
+
+    #menu h1 {
+      animation: pulse 5s infinite;
+      font-size: 3.2rem;
+    }
+
+    h2 {
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      margin-top: 0.1rem;
+    }
+
+    #cambiarIdioma button {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 0;
+      color: white;
+      backdrop-filter: blur(5px);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    #cambiarIdioma button:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .button_large {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 1rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .button_large button {
+      background: var(--accent);
+    }
+
+    .correct {
+      background-color: #4caf50 !important;
+    }
+
+    .wrong {
+      background-color: #f44336 !important;
+    }
+
+    #game,
+    #end-screen,
+    #menu {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      padding-top: 0rem;
+    }
+
+    #end-screen h1 {
+      font-size: 2.5rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .record {
+      margin: 1rem;
+      font-size: 1rem;
+    }
+
+    #score {
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .question {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .new-record {
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style> 
+  </head> 
+  <body> 
+    <div id="cambiarIdioma" style="position: absolute; top: 10px; right: 10px;"> <button onclick="changeLanguage('eus')"> <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAABv1BMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcnjHSLyf///8AAADhdG9HEA2SvnYfNRGXZixWVlaPbi2nWCuHdS2fYCvGOyiAfS5wjC/QMSfRMCfPMidimDBenDFgmjFfmzGvUSq0TCqzSynLNShenTHLNijOMyddnTCwTypimTFgmjBtjjDDPCjMNSdtjTDOMyjEPChokzBtjzBnlDFokjBqkTBrkTDBPyjMNCfBQCjEPShmlDB4hC+yTiq7RCl8fy6xTyp3hS+/Qii8Qym9Qyl5gy+xTSl7gi9olDC+Qii+QSm/QCl9fi7NNCd7gC7DPShnkzBsji96gS7JNyi5RildnTFhmTFpkjB6gi95gy59gC9+fi68RCl3hC6vTypllTCuUCp1hy94gy621KO/QSlMJyWpVStsjy9lljHCPinBPih0iC9qkDCWunUhNBGFeC3AQCjFOyiUaiyaZCuEeS17gS6Cei6nq3SUvnYnLhBGEA2Taiy6mXLEPCnUgHAwJQ9CFA6UvHbZfHBDFA3KNyfEkHKat3WqqHS/lXLceHDYfnDgdm+0nnNlMqb7AAAAEHRSTlMADv0fq+YaM40h3YWBZuMr6R1B6gAAC9FJREFUeNrt3QmTXWUVheHOCJnPh00S6ATCoBGCilEjUZyNYgQUMI4YEBxQwBmcxXme9Qd7kyotS7Dse863917ry/v+gHTX6Sd73UBy78YGERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERER0Xjtuo5M27X8p7/j4OFXkW2HD+5Y9vM/sp+H6N3+I0t+/nv38ATd27N3AYDdPD//ds//+e/byePzb+e+2QAO8fRG6NBsAAd4eCN0YDaA63l4I3Q9AAAAAAAAAAAAAAAAAAAAAMwCcGzabvfcfKbptXnDttvU++4fPjdtv2PFAKbp/q8CoGe3nJgmKwDT9NAjAOjVbSfvnOwATK9W2wFbAGtdfx0AcjtgCmDN668EQGwHLAGsff21AEjt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" alt="Euskara" style="padding: 0rem; width: 50px; height: 50px" /></button> <button onclick="changeLanguage('es')"> <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAA51BMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxsxzSLycAAABqRi/WPSZRPAlHEA3jpx55Ui2FXCzEjiOXaiiygCW1gyWBQS2ndyahOit/QS7usRyZPCtsRy7srh19VSxuSS5yTS7nqx27hyONYirQmCDwshyabCiqeiZ1Ty7ZoB+CWSvKkyG+iiOJXyrGkSHhph6tfSWhcie4hSTTmyDeox6ebyiSZinVPibtpR11Qy6qOCqTPSyIQCzDMihxSy7RLyfCjSJxTC60giTNMCe7NCieOyu2NSlIFQ16Qi5HcEysCEbJAAAATXRSTlMAZg4rHoP9M43iq///////////////////////////////////////////////////////////////////////////////////////AGbdM9sAAAhQSURBVHja7d1pVxppGoBhk2i6TTt0RxQdDM0mqwqi4jJjNC6JWf7//5lMMqMUFASBSF64rk99Dmj68NxWFW8V1MICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDsWfyNQC2OP/3nS8v/IFjLS8/Hm/8L4w/by+UXY239zT/8jcA4+4FXXr/wvRpjA/DSyzcDe4HRNwHPvHqz4NnIASx58WbB0sgB/O7FmwW/C0AAAhCAAAQgAAEIQAACEMBIAbxeIRCvBSAAAQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAAEgAAQAAJAAAgAASAABIAAEAACQAAIAAEgAASAABAAAkAACAABIAAEQHgBfP6TQHz+KQH89QeB+EsAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEAAAph2AJnd1mb99Gwtf5vNFpJ75Vr6/c1uzvzmIYBcZSOVzybiJMuHjW1DnOEAqsf1tfjZP8inGzYFMxlAplUrJoZSOGtqYNYCOD7aSTxCIdWqGufMBJBZ3088WrK+aqAzEcD2YTExksLpiZEGH8B2/SoxsqwEQg+gVEyMpZDOGGvAAdQTYztT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" alt="Español" style="padding: 0rem; width: 50px; height: 50px" /></button> <button onclick="changeLanguage('en')"> <img src="data:image/png;base64, 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" alt="English" style="padding: 0rem; width: 50px; height: 50px" /></button> 
+    </div> 
+    <div id="menu"> 
+      <h1>💎A-MENA💎</h1> 
+      <h2>Aprendiendo el mineral y su mena de forma amena</h2> 
+      <div class="buttons"> <button onclick="startGame('mena-mineral')">MENA⛏️ - MINERAL💎</button> <button onclick="startGame('mineral-mena')">MINERAL💎 - MENA⛏️</button> 
+      </div> 
+      <div class="button_large"> <button onclick="startGame('mezcla')">💫 MEZCLA 💫</button> 
+      </div> 
+      <hr /> 
+      <div class="button_large"> <button id="btnComposicion" onclick="startGame('compquim')">🧪 COMPOSICIÓN QUÍMICA 🧪</button> 
+      </div> 
+      <h3 style="font-size: 0.75rem; font-weight: normal">Ibai Del Estal Alonso - 2025</h3> 
+    </div> 
+    <div id="game" class="hidden"> 
+      <h1>Pregunta:</h1> 
+      <div class="question" id="question"></div> 
+      <div class="buttons" id="buttons"></div> 
+    </div> 
+    <div id="end-screen" class="hidden"> 
+      <h1>☠️ Has perdido ☠️</h1> 
+      <p id="score">Puntos: 0</p> 
+      <div class="record" id="record"></div> 
+      <p id="new-record" class="hidden new-record">🏆 ¡Nuevo récord! 🏆</p> <button onclick="startGame(mode)">Reiniciar</button> <button onclick="showMenu()">Volver al menú</button> 
+    </div> 
+    <script>
+    let minerals = [
+      { mineral: "Hematites", mena: "Fe", composicion: "Óxido de Fe" },
+      { mineral: "Magnetita", mena: "Fe", composicion: "Óxido de Fe" },
+      { mineral: "Limonita", mena: "Fe", composicion: "Hidróxido de Fe" },
+      { mineral: "Goethita", mena: "Fe", composicion: "Oxihidróxido de Fe" },
+      { mineral: "Siderita", mena: "Fe", composicion: "Carbonato de Fe" },
+      { mineral: "Gibbsita", mena: "Al", composicion: "Hidróxido de Al" },
+      { mineral: "Boehmita", mena: "Al", composicion: "Oxihidróxido de Al" },
+      { mineral: "Diáspora (bauxita)", mena: "Al", composicion: "Oxihidróxido de Al" },
+      { mineral: "Cromita", mena: "Cr", composicion: "Óxido de Cr" },
+      { mineral: "Scheelita", mena: "W", composicion: "Wolframato de Ca" },
+      { mineral: "Wolframita", mena: "W", composicion: "Óxido de W" },
+      { mineral: "Casiterita", mena: "Sn", composicion: "Óxido de Sn" },
+      { mineral: "Espodumena", mena: "Li", composicion: "Piroxeno (Aluminosilicato) de Li" },
+      { mineral: "Petalita", mena: "Li", composicion: "Aluminosilicato de Li" },
+      { mineral: "Lepidolita", mena: "Li", composicion: "Mica de Li + Al" },
+      { mineral: "Sales de Li", mena: "Li (evaporitas)", composicion: "Li (evaporitas)" },
+      { mineral: "Galena", mena: "Pb", composicion: "Sulfuro de Pb" },
+      { mineral: "Cerusita", mena: "Pb", composicion: "Carbonato de Pb" },
+      { mineral: "Esfalerita", mena: "Zn", composicion: "Sulfuro de Zn" },
+      { mineral: "Smithsonita", mena: "Zn", composicion: "Carbonato de Zn" },
+      { mineral: "Calcopirita", mena: "Cu", composicion: "Sulfuro de Cu + Fe" },
+      { mineral: "Calcocita", mena: "Cu", composicion: "Sulfuro de Cu" },
+      { mineral: "Covellita", mena: "Cu", composicion: "Sulfuro de Cu" },
+      { mineral: "Bornita", mena: "Cu", composicion: "Sulfuro de Cu + Fe" },
+      { mineral: "Cuprita", mena: "Cu", composicion: "Óxido de Cu" },
+      { mineral: "Pentlandita", mena: "Ni", composicion: "Sulfuro de Fe + Ni" },
+      { mineral: "Columbita-tantalita", mena: "Nb-Ta", composicion: "Óxido de Nb-Ta" },
+      { mineral: "Pirocloro", mena: "Nb", composicion: "Óxido de Nb" }
+    ];
+
+    let score = 0;
+    let mode = "";
+    let records = {
+      "mena-mineral": localStorage.getItem("record-mena-mineral") || 0,
+      "mineral-mena": localStorage.getItem("record-mineral-mena") || 0,
+      "mezcla": localStorage.getItem("record-mezcla") || 0,
+      "compquim": localStorage.getItem("record-compquim") || 0
+
+    };
+
+    const translations = {
+      es: {
+        title: "💎A-MENA💎",
+        subtitle: "Aprendiendo el mineral y su mena de forma amena",
+        menuButtons: ["MENA⛏️ - MINERAL💎", "MINERAL💎 - MENA⛏️", "💫 MEZCLA 💫", "🧪 COMPOSICIÓN QUÍMICA 🧪"],
+        pregunta: "Pregunta:",
+        pregunta_mena_mine: "¿Cuál es el mineral de la mena ",
+        pregunta_mine_mena: "¿Cuál es la mena del mineral ",
+        pregunta_comp: "¿Cuál es la composición del mineral ",
+        perder: "☠️ Has perdido ☠️",
+        puntos: "Puntos: ",
+        record: "🥇Récord: ",
+        nuevoRecord: "🏆 ¡Nuevo récord! 🏆",
+        reiniciar: "Reiniciar",
+        volverMenu: "Volver al menú",
+        minerals: minerals
+      },
+      eus: {
+        title: "💎A-MENA💎",
+        subtitle: "Mineralen meak era dibertigarrian ikasten",
+        menuButtons: ["MEA⛏️ - MINERALA💎", "MINERALA💎 - MEA⛏️", "💫 NAHASKETA 💫", "🧪 KONPOSIZIO KIMIKOA 🧪"],
+        pregunta: "Galdera:",
+        pregunta_mena_mine: "Zein da mineral honen mea: ",
+        pregunta_mine_mena: "Zein da mea honen minerala: ",
+        pregunta_comp: "Zein da mineral honen komposizioa: ",
+        perder: "☠️ Galdu duzu ☠️",
+        puntos: "Puntuak: ",
+        record: "🥇Errekorra: ",
+        nuevoRecord: "🏆 Errekor berria! 🏆",
+        reiniciar: "Berrabiarazi",
+        volverMenu: "Menura itzuli",
+        minerals: [
+          { mineral: "Hematite", mena: "Fe", composicion: "Fe oxidoa" },
+          { mineral: "Magnetita", mena: "Fe", composicion: "Fe oxidoa" },
+          { mineral: "Limonita", mena: "Fe", composicion: "Fe hidroxidoa" },
+          { mineral: "Goethita", mena: "Fe", composicion: "Fe oxihidroxidoa" },
+          { mineral: "Siderita", mena: "Fe", composicion: "Fe karbonatoa" },
+          { mineral: "Gibbstita", mena: "Al", composicion: "Al hidroxidoa" },
+          { mineral: "Boehmita", mena: "Al", composicion: "Al oxihidroxidoa" },
+          { mineral: "Diaspora (bauxita)", mena: "Al", composicion: "Al oxihidroxidoa" },
+          { mineral: "Kromita", mena: "Cr", composicion: "Cr oxidoa" },
+          { mineral: "Scheelita", mena: "W", composicion: "Ca wolframatoa" },
+          { mineral: "Wolframita", mena: "W", composicion: "W oxidoa" },
+          { mineral: "Kasiterita", mena: "Sn", composicion: "Sn oxidoa" },
+          { mineral: "Espodumena", mena: "Li", composicion: "Li aluminosilikatoa" },
+          { mineral: "Petalita", mena: "Li", composicion: "Li silikatoa (mika)" },
+          { mineral: "Lepidolita", mena: "Li", composicion: "Li + Al mika" },
+          { mineral: "Li gatzak", mena: "Li (ebaporitak)", composicion: "Li (ebaporitak)" },
+          { mineral: "Galena", mena: "Pb", composicion: "Pb sulfuroa" },
+          { mineral: "Cerussita", mena: "Pb", composicion: "Pb karbonatoa" },
+          { mineral: "Esfalerita", mena: "Zn", composicion: "Zn sulfuroa" },
+          { mineral: "Smithsonita", mena: "Zn", composicion: "Zn karbonatoa" },
+          { mineral: "Kalkopirita", mena: "Cu", composicion: "Cu + Fe sulfuroa" },
+          { mineral: "Kalkozita", mena: "Cu", composicion: "Cu sulfuroa" },
+          { mineral: "Covellita", mena: "Cu", composicion: "Cu sulfuroa" },
+          { mineral: "Bornita", mena: "Cu", composicion: "Cu + Fe sulfuroa" },
+          { mineral: "Kuprita", mena: "Cu", composicion: "Cu oxidoa" },
+          { mineral: "Pentlandita", mena: "Ni", composicion: "Ni + Fe sulfuroa" },
+          { mineral: "Kolumbita-tantalita", mena: "Nb-Ta", composicion: "Nb-Ta oxidoa" },
+          { mineral: "Pirokloro", mena: "Nb", composicion: "Nb oxidoa" }
+        ]
+      },
+      en: {
+        title: "💎A-MENA💎",
+        subtitle: "Learning minerals and their ores in a funny way",
+        menuButtons: ["ORE⛏️ - MINERAL💎", "MINERAL💎 - ORE⛏️", "💫 MIX 💫", "🧪 CHEMICAL COMPOSITION 🧪"],
+        pregunta: "Question:",
+        pregunta_mena_mine: "Which is this ore's mineral: ",
+        pregunta_mine_mena: "Which is this mineral's ore: ",
+        pregunta_comp: "Which is this mineral composition: ",
+        perder: "☠️ Game over ☠️",
+        puntos: "Points: ",
+        record: "🥇Record: ",
+        nuevoRecord: "🏆 New record! 🏆",
+        reiniciar: "Restart",
+        volverMenu: "Return to Menu",
+        minerals: [
+          { mineral: "Hematite", mena: "Fe", composicion: "Fe oxide" },
+          { mineral: "Magnetite", mena: "Fe", composicion: "Fe oxide" },
+          { mineral: "Limonite", mena: "Fe", composicion: "Fe hidroxide" },
+          { mineral: "Goethite", mena: "Fe", composicion: "Fe oxyhidroxide" },
+          { mineral: "Siderite", mena: "Fe", composicion: "Fe carbonate" },
+          { mineral: "Gibbstite", mena: "Al", composicion: "Al hydroxide" },
+          { mineral: "Boehmite", mena: "Al", composicion: "Al oxyhydroxide" },
+          { mineral: "Diaspore (bauxite)", mena: "Al", composicion: "Al oxyhydroxide" },
+          { mineral: "Chromite", mena: "Cr", composicion: "Cr oxide" },
+          { mineral: "Scheelite", mena: "W", composicion: "Ca tungstate" },
+          { mineral: "Wolframite", mena: "W", composicion: "W oxide" },
+          { mineral: "Cassiterite", mena: "Sn", composicion: "Sn oxide" },
+          { mineral: "Spodumene ", mena: "Li", composicion: "Li (aluminosilicate) pyroxene" },
+          { mineral: "Petalite", mena: "Li", composicion: "Li aluminosilicate" },
+          { mineral: "Lepidolite", mena: "Li", compoqsicion: "Li + Al silicates (mica)" },
+          { mineral: "Li salts", mena: "Li (evaporites)", composicion: "Li (evaporites)" },
+          { mineral: "Galena", mena: "Pb", composicion: "Pb sulphide" },
+          { mineral: "Cerussite", mena: "Pb", composicion: "Zn sulphide" },
+          { mineral: "Sphalerite", mena: "Zn", composicion: "Zn sulphide" },
+          { mineral: "Smithsonite", mena: "Zn", composicion: "Zn carbonate" },
+          { mineral: "Chalcopyrite", mena: "Cu", composicion: "Cu + Fe sulphide" },
+          { mineral: "Chalcocite", mena: "Cu", composicion: "Cu sulphide" },
+          { mineral: "Covellite", mena: "Cu", composicion: "Cu sulphide" },
+          { mineral: "Bornite", mena: "Cu", composicion: "Cu + Fe sulphide" },
+          { mineral: "Cuprite", mena: "Cu", composicion: "Cu sulphide" },
+          { mineral: "Pentlandite", mena: "Ni", composicion: "Ni + Fe sulphide" },
+          { mineral: "Columbite-tantalites", mena: "Nb-Ta", composicion: "Nb-Ta oxide" },
+          { mineral: "Pyrochlore", mena: "Nb", composicion: "Nb oxide" }
+        ]
+      }
+    };
+
+    let currentLanguage = 'es';
+
+    function changeLanguage(lang) {
+      currentLanguage = lang;
+      updateTexts();
+
+      minerals = translations[lang].minerals;
+
+      if (!document.getElementById("game").classList.contains("hidden")) {
+        loadQuestion();
+      }
+    }
+
+    function updateTexts() {
+      const t = translations[currentLanguage];
+
+      document.querySelector('h1').textContent = t.title;
+      document.querySelector('h2').textContent = t.subtitle;
+
+      document.querySelectorAll('#menu .buttons button').forEach((btn, i) => {
+        btn.textContent = t.menuButtons[i];
+      });
+      document.querySelector('#menu .button_large button').textContent = t.menuButtons[2];
+      document.querySelector('#menu .button_large #btnComposicion').textContent = t.menuButtons[3];
+
+
+
+
+
+      document.querySelector('#end-screen h1').textContent = t.perder;
+      document.querySelector('#end-screen #new-record').textContent = t.nuevoRecord;
+      document.querySelectorAll('#end-screen button')[0].textContent = t.reiniciar;
+      document.querySelectorAll('#end-screen button')[1].textContent = t.volverMenu;
+    }
+
+
+    const originalLoadQuestion = loadQuestion;
+    loadQuestion = function () {
+      originalLoadQuestion();
+      document.querySelector('#game h1').textContent = translations[currentLanguage].pregunta;
+    };
+
+    const originalEndGame = endGame;
+    endGame = function () {
+      originalEndGame();
+      document.getElementById("score").textContent = translations[currentLanguage].puntos + score;
+      document.getElementById("record").textContent = translations[currentLanguage].record + `${records[mode]}🥇`;
+    };
+
+    function showMenu() {
+      document.getElementById("menu").classList.remove("hidden");
+      document.getElementById("game").classList.add("hidden");
+      document.getElementById("end-screen").classList.add("hidden");
+      document.getElementById("cambiarIdioma").style.visibility = "visible";
+    }
+
+    function startGame(selectedMode) {
+      mode = selectedMode;
+      score = 0;
+      document.getElementById("end-screen").classList.add("hidden");
+      document.getElementById("menu").classList.add("hidden");
+      document.getElementById("game").classList.remove("hidden");
+      document.getElementById("cambiarIdioma").style.visibility = "hidden";
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      let current = minerals[Math.floor(Math.random() * minerals.length)];
+      let questionText, correctAnswer, options;
+      let elegirTipoPregunta = Math.random();
+
+      if (mode === "mena-mineral" || (mode === "mezcla" && Math.random() < 0.5)) {
+        questionText = translations[currentLanguage].pregunta_mena_mine + `${current.mena}?`;
+        correctAnswer = current.mineral;
+        options = minerals.filter(m => m.mena !== current.mena).map(m => m.mineral);
+      } else {
+        questionText = translations[currentLanguage].pregunta_mine_mena + `${current.mineral}?`;
+        correctAnswer = current.mena;
+        options = minerals.filter(m => m.mineral !== current.mineral).map(m => m.mena);
+      }
+
+      if (mode === "compquim") {
+        questionText = translations[currentLanguage].pregunta_comp + `${current.mineral}?`
+        correctAnswer = current.composicion;
+        options = minerals.filter(m => m.composicion !== current.composicion).map(m => m.composicion);
+      }
+
+      let answerOptions = [correctAnswer];
+      while (answerOptions.length < 4) {
+        let random = options[Math.floor(Math.random() * options.length)];
+        if (!answerOptions.includes(random)) answerOptions.push(random);
+      }
+
+      answerOptions.sort(() => Math.random() - 0.5);
+
+      document.getElementById("question").textContent = questionText;
+      let buttons = document.getElementById("buttons");
+      buttons.innerHTML = "";
+
+      answerOptions.forEach(option => {
+        let button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => checkAnswer(button, option, correctAnswer);
+        buttons.appendChild(button);
+      });
+    }
+
+    function checkAnswer(button, selected, correct) {
+      let buttons = document.querySelectorAll("#buttons button");
+      buttons.forEach(btn => btn.disabled = true);
+
+      if (selected === correct) {
+        button.classList.add("correct");
+        score++;
+        setTimeout(loadQuestion, 1000);
+      } else {
+        button.classList.add("wrong");
+        buttons.forEach(btn => {
+          if (btn.textContent === correct) {
+            btn.classList.add("correct");
+          }
+        });
+        setTimeout(endGame, 1000);
+      }
+    }
+
+    function endGame() {
+      document.getElementById("game").classList.add("hidden");
+      document.getElementById("end-screen").classList.remove("hidden");
+      document.getElementById("score").textContent = `Puntos: ${score}`;
+
+      if (score > records[mode]) {
+        records[mode] = score;
+        localStorage.setItem(`record-${mode}`, score);
+        document.getElementById("new-record").classList.remove("hidden");
+      } else {
+        document.getElementById("new-record").classList.add("hidden");
+      }
+
+      document.getElementById("record").textContent = `🥇Récord: ${mode.toUpperCase()}: ${records[mode]}🥇`;
+    }
+
+  </script>  
+  </body>
+</html>
